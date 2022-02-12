@@ -15,7 +15,6 @@ namespace AsteroidGame
         public static BaseObject[] __objs;
 
         
-
         static Game() { }
 
         public static void Init(Form form)
@@ -57,18 +56,30 @@ namespace AsteroidGame
         public static void Load()
         {
             Random r = new Random();
-            __objs = new BaseObject[30];
-            for (int i = 0; i < __objs.Length/2; i++)
+            __objs = new BaseObject[31];
+
+            //Создается планета /create planet/
+            for (int i = 0; i < 1; i++)
             {
-                __objs[i] = new BaseObject(new Point(r.Next(0, __Height), r.Next(0, __Width - 300)), 
+                __objs[i] = new Planets(new Point(r.Next(0, __Height), r.Next(0, __Width - 500)),
+                                            new Point(5, 0),
+                                            new Size(150, 150));
+            }
+
+            //Создается астероид /creat asteroid/
+            for (int i = 1; i < (__objs.Length+1)/2; i++)
+            {
+                __objs[i] = new Asteroid(new Point(r.Next(0, __Height), r.Next(0, __Width - 300)), 
                                             new Point(RAN(), RAN()), 
                                             new Size(20, 20));
             }
-            for (int i = __objs.Length/2; i < __objs.Length; i++)
+
+            //Создается звезда /creat star/
+            for (int i = (__objs.Length + 1)/2; i < (__objs.Length); i++)
             {
                 __objs[i] = new Star(new Point(r.Next(0, __Height), r.Next(0, __Width - 300)),
                                             new Point(15, 0),
-                                            new Size(r.Next(5, 10), r.Next(5,10)));
+                                            new Size(r.Next(30, 50), r.Next(30, 50)));
             }
 
             int RAN()

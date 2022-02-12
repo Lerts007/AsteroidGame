@@ -17,21 +17,9 @@ namespace AsteroidGame
             _Size = size;
         }
 
-        public virtual void Draw()
-        {
-            Game.__buffer.Graphics.DrawEllipse(Pens.White, _Pos.X, _Pos.Y, _Size.Width, _Size.Height);
-        }
+        public virtual void Draw() {    }
 
-        public virtual void Update()
-        {
-            _Pos.X += _Dir.X;
-            _Pos.Y += _Dir.Y;
-            if(_Pos.X < 0) _Dir.X = -_Dir.X;
-            if ((_Pos.X) > Game.__Width-20) _Dir.X = -_Dir.X;
-
-            if (_Pos.Y < 0) _Dir.Y = -_Dir.Y;
-            if (_Pos.Y > Game.__Height-20) _Dir.Y = -_Dir.Y;
-        }
+        public virtual void Update() {  }
 
     }
 }
