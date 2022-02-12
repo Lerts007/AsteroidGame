@@ -58,11 +58,17 @@ namespace AsteroidGame
         {
             Random r = new Random();
             __objs = new BaseObject[30];
-            for (int i = 0; i < __objs.Length; i++)
+            for (int i = 0; i < __objs.Length/2; i++)
             {
                 __objs[i] = new BaseObject(new Point(r.Next(0, __Height), r.Next(0, __Width - 300)), 
                                             new Point(RAN(), RAN()), 
                                             new Size(20, 20));
+            }
+            for (int i = __objs.Length/2; i < __objs.Length; i++)
+            {
+                __objs[i] = new Star(new Point(r.Next(0, __Height), r.Next(0, __Width - 300)),
+                                            new Point(15, 0),
+                                            new Size(r.Next(5, 10), r.Next(5,10)));
             }
 
             int RAN()

@@ -17,12 +17,12 @@ namespace AsteroidGame
             _Size = size;
         }
 
-        public void Draw()
+        public virtual void Draw()
         {
             Game.__buffer.Graphics.DrawEllipse(Pens.White, _Pos.X, _Pos.Y, _Size.Width, _Size.Height);
         }
 
-        public void Update()
+        public virtual void Update()
         {
             _Pos.X += _Dir.X;
             _Pos.Y += _Dir.Y;
