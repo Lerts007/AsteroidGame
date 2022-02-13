@@ -67,7 +67,11 @@ namespace AsteroidGame
             {
                 item.Update();
                 if(item.Collision(__bullet))
+                {
+                    __bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(15, 5));
                     System.Media.SystemSounds.Hand.Play();
+                }
+                    
             }
             __bullet.Update();
                 
