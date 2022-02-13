@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Drawing;
+using AsteroidGame.VisualObject;
 
 namespace AsteroidGame
 {
@@ -12,9 +13,12 @@ namespace AsteroidGame
         public static int __Width { get; set; }
         public static int __Height { get; set; }
 
-        public static BaseObject[] __objs;
+        private static Star[] __star;
+        private static Asteroid[] __asteroid;
+        private static Bullet __bullet;
+        private static Planets __planet;
 
-        
+
         static Game() { }
 
         public static void Init(Form form)
@@ -40,47 +44,66 @@ namespace AsteroidGame
         public static void Draw()
         {           
             __buffer.Graphics.Clear(Color.Black);
-            foreach (BaseObject item in __objs)
+            __planet.Draw();
+            foreach (Star item in __star)
             {
                 item.Draw();
             }
+            foreach (Asteroid item in __asteroid)
+            {
+                item.Draw();
+            }
+            __bullet.Draw();
             __buffer.Render();
         }
 
         public static void Update()
         {
-            foreach (BaseObject item in __objs)
+            __planet.Update();
+            foreach (Star item in __star)
                 item.Update();
+
+            foreach (Asteroid item in __asteroid)
+            {
+                item.Update();
+                if(item.Collision(__bullet))
+                    System.Media.SystemSounds.Hand.Play();
+            }
+            __bullet.Update();
+                
+
         }
 
         public static void Load()
         {
             Random r = new Random();
-            __objs = new BaseObject[31];
+            __star = new Star[31];
+            __asteroid = new Asteroid[10];
+
 
             //Создается планета /create planet/
-            for (int i = 0; i < 1; i++)
-            {
-                __objs[i] = new Planets(new Point(r.Next(0, __Height), r.Next(0, __Width - 500)),
+                __planet = new Planets(new Point(r.Next(0, __Height), r.Next(0, __Width - 500)),
                                             new Point(5, 0),
                                             150);
-            }
 
             //Создается астероид /creat asteroid/
-            for (int i = 1; i < (__objs.Length+1)/2; i++)
+            for (int i = 0; i < __asteroid.Length; i++)
             {
-                __objs[i] = new Asteroid(new Point(r.Next(0, __Height), r.Next(0, __Width - 300)), 
+                __asteroid[i] = new Asteroid(new Point(r.Next(0, __Height), r.Next(0, __Width - 300)), 
                                             new Point(RAN(), RAN()), 
                                             20);
             }
 
             //Создается звезда /creat star/
-            for (int i = (__objs.Length + 1)/2; i < (__objs.Length); i++)
+            for (int i = 0; i < __star.Length; i++)
             {
-                __objs[i] = new Star(new Point(r.Next(0, __Height), r.Next(0, __Width - 300)),
-                                            new Point(15, 0),
+                __star[i] = new Star(new Point(r.Next(0, __Height), r.Next(0, __Width - 300)),
+                                            new Point(r.Next(15, 25), 0),
                                             r.Next(30, 50));
             }
+
+            //Создается пуля /creat bullet/
+            __bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(15, 5));
 
             int RAN()
             {

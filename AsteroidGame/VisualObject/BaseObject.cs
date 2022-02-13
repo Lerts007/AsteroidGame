@@ -2,7 +2,7 @@
 using System.Drawing;
 
 
-namespace AsteroidGame
+namespace AsteroidGame.VisualObject
 {
     internal abstract class BaseObject
     {
