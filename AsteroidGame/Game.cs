@@ -63,7 +63,7 @@ namespace AsteroidGame
             {
                 __objs[i] = new Planets(new Point(r.Next(0, __Height), r.Next(0, __Width - 500)),
                                             new Point(5, 0),
-                                            new Size(150, 150));
+                                            150);
             }
 
             //Создается астероид /creat asteroid/
@@ -71,7 +71,7 @@ namespace AsteroidGame
             {
                 __objs[i] = new Asteroid(new Point(r.Next(0, __Height), r.Next(0, __Width - 300)), 
                                             new Point(RAN(), RAN()), 
-                                            new Size(20, 20));
+                                            20);
             }
 
             //Создается звезда /creat star/
@@ -79,7 +79,7 @@ namespace AsteroidGame
             {
                 __objs[i] = new Star(new Point(r.Next(0, __Height), r.Next(0, __Width - 300)),
                                             new Point(15, 0),
-                                            new Size(r.Next(30, 50), r.Next(30, 50)));
+                                            r.Next(30, 50));
             }
 
             int RAN()

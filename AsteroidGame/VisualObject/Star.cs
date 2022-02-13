@@ -10,7 +10,8 @@ namespace AsteroidGame
     internal class Star : BaseObject
     {
         private static Image __ImageStar = Properties.Resources.Star;
-        public Star(Point poz, Point dir, Size size) : base(poz, dir, size) {        }
+        public Star(Point poz, Point dir, int size) 
+            : base(poz, dir, new Size(size, size)) {        }
 
         public override void Draw()
         {
@@ -19,7 +20,7 @@ namespace AsteroidGame
 
         public override void Update()
         {
-            _Pos.X = _Pos.X - _Dir.X;
+            _Pos.X -= _Dir.X;
             if ((_Pos.X+_Size.Width) < 0) _Pos.X = Game.__Width + _Size.Width;
         }
     }

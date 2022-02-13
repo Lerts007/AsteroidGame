@@ -12,9 +12,10 @@ namespace AsteroidGame
         private static Image[] __ImagePlanet = {Properties.Resources._1_planet,
                                                 Properties.Resources._2_planet,
                                                 Properties.Resources._3_planet};
-        Image _Planet = __ImagePlanet[3];
+        Image _Planet = __ImagePlanet[2];
         Random r = new Random();
-        public Planets(Point pos, Point dir, Size size) : base(pos, dir, size) {     }
+        public Planets(Point pos, Point dir, int size)
+            : base(pos, dir, new Size(size, size)) {     }
 
         public override void Draw()
         {
@@ -23,7 +24,7 @@ namespace AsteroidGame
 
         public override void Update()
         {
-            _Pos.X = _Pos.X - _Dir.X;
+            _Pos.X -= _Dir.X;
             if ((_Pos.X + _Size.Width) < 0)
             {
                 _Pos.X = Game.__Width + _Size.Width;
