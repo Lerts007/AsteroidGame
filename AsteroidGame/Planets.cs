@@ -9,10 +9,10 @@ namespace AsteroidGame
 {
     internal class Planets : BaseObject
     {
-        private static Image[] __ImagePlanet = { Image.FromFile("image/1_planet.png"),
-                                              Image.FromFile("image/2_planet.png"),
-                                              Image.FromFile("image/3_planet.png")};
-        Image _Planet = __ImagePlanet[0];
+        private static Image[] __ImagePlanet = {Properties.Resources._1_planet,
+                                                Properties.Resources._2_planet,
+                                                Properties.Resources._3_planet};
+        Image _Planet = __ImagePlanet[3];
         Random r = new Random();
         public Planets(Point pos, Point dir, Size size) : base(pos, dir, size) {     }
 

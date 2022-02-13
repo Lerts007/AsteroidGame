@@ -9,7 +9,7 @@ namespace AsteroidGame
 {
     internal class Star : BaseObject
     {
-        private static Image __ImageStar = Image.FromFile("image/Star.png");
+        private static Image __ImageStar = Properties.Resources.Star;
         public Star(Point poz, Point dir, Size size) : base(poz, dir, size) {        }
 
         public override void Draw()

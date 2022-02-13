@@ -9,7 +9,7 @@ namespace AsteroidGame
 {
     internal class Asteroid : BaseObject
     {
-        private static Image __ImageAsteroid = Image.FromFile("image/Asteroid.png");
+        private static Image __ImageAsteroid = Properties.Resources.Asteroid;
 
         public Asteroid(Point pos, Point dir, Size size) : base(pos, dir, size)
         {
