@@ -74,7 +74,6 @@ namespace AsteroidGame
                     
             }
             __bullet.Update();
-                
 
         }
 

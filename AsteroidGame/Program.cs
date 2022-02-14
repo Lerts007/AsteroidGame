@@ -11,12 +11,13 @@ namespace AsteroidGame
         [STAThread]
         static void Main()
         {
-            Form form = new Form();            
+            Form form = new Form();
+            form.StartPosition = FormStartPosition.CenterScreen;
+            form.MaximumSize = new System.Drawing.Size(800, 600);
+            form.MinimumSize = new System.Drawing.Size(800, 600);
             form.Width = 800;
             form.Height = 600;
-            Game.Init(form);
-            form.Show();
-            Game.Draw();
+            SplachScreen.StartMenu(form);
             Application.Run(form);
         }
     }
