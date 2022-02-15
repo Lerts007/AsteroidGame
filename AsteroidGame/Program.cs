@@ -15,10 +15,8 @@ namespace AsteroidGame
             form.StartPosition = FormStartPosition.CenterScreen;
             form.MaximumSize = new System.Drawing.Size(800, 600);
             form.MinimumSize = new System.Drawing.Size(800, 600);
-            form.Width = 800;
-            form.Height = 600;
             SplachScreen.StartMenu(form);
             Application.Run(form);
-        }
-    }
+        }        
+    }    
 }

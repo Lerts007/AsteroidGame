@@ -31,7 +31,10 @@ namespace AsteroidGame
             ButtonSettings();
             ButtonExit();
 
+            
         }
+
+        
 
         private static void ButtonListGame()
         {
@@ -52,6 +55,7 @@ namespace AsteroidGame
         private static void ButtonRecords()
         {
             btn_2.Text = "Records";
+            btn_2.Click += btn_2_Clicked;
         }
 
         private static void ButtonSettings()
@@ -73,9 +77,17 @@ namespace AsteroidGame
                btn[i].Visible = false;
             }
             
-            Game.Init(__form);
-            __form.Show();
-            Game.Draw();
+            new Game(__form).ShowDialog();
+
+            for (int i = 0; i < btn.Count; i++)
+            {
+                btn[i].Visible = true;
+            }
+        }
+
+        private static void btn_2_Clicked(object sender, EventArgs e)
+        {
+            new Pause().ShowDialog();
         }
 
         private static void btn_4_Clicked(object sender, EventArgs e)

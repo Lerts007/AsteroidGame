@@ -5,10 +5,11 @@ using AsteroidGame.VisualObject;
 
 namespace AsteroidGame
 {
-    internal static class Game
+    internal class Game : Form
     {
         private static BufferedGraphicsContext __context;
         public static BufferedGraphics __buffer;
+        private static Form form = null;
 
         public static int __Width { get; set; }
         public static int __Height { get; set; }
@@ -17,29 +18,62 @@ namespace AsteroidGame
         private static Asteroid[] __asteroid;
         private static Bullet __bullet;
         private static Planets __planet;
+        private static Timer timer = new Timer { Interval = 100 };
 
-
-        static Game() { }
-
-        public static void Init(Form form)
+        public Game(Form _form) 
         {
+            form = _form;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.MaximumSize = form.MaximumSize;
+            this.MinimumSize = form.MinimumSize;
+            __Width = form.ClientSize.Width;
+            __Height = form.ClientSize.Height;
+
+            Init();
+        }
+
+        public void Init()
+        {
+            
             Graphics g;
 
             __context = BufferedGraphicsManager.Current;
 
-            g = form.CreateGraphics();
+            g = this.CreateGraphics();
 
-            __Width = form.ClientSize.Width;
-            __Height = form.ClientSize.Height;
+            
 
             __buffer = __context.Allocate(g, new Rectangle(0, 0, __Width, __Height));
            
             Load();
 
-            Timer timer = new Timer { Interval = 100 };
+            this.KeyDown += form_KeyDown;
+            this.KeyPreview = true;
+
+            
             timer.Start();
             timer.Tick += Timer_Tick;
         }
+
+        private void form_KeyDown(object sender, KeyEventArgs e)
+        {
+            timer.Stop();
+            
+            if (e.KeyCode == Keys.Escape)
+            {
+                Pause ps = new Pause();
+                ps.ShowDialog();
+                if (ps.bl)
+                {
+                    this.Close();
+                    __buffer.Dispose();
+                    __context.Dispose();
+                }
+                else
+                    timer.Start();
+            }
+        }
+
 
         public static void Draw()
         {           
