@@ -8,15 +8,11 @@ namespace AsteroidGame
 {
     internal static class Program
     {
-        [STAThread]
+        //[STAThread]
         static void Main()
         {
-            Form form = new Form();
-            form.StartPosition = FormStartPosition.CenterScreen;
-            form.MaximumSize = new System.Drawing.Size(800, 600);
-            form.MinimumSize = new System.Drawing.Size(800, 600);
-            SplachScreen.StartMenu(form);
-            Application.Run(form);
+            StartGame SG = new StartGame();
+            SG.Launch();
         }        
     }    
 }

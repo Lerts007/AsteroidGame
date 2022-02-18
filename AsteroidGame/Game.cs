@@ -18,16 +18,17 @@ namespace AsteroidGame
         private static Asteroid[] __asteroid;
         private static Bullet __bullet;
         private static Planets __planet;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private static Timer timer = new Timer { Interval = 100 };
 
         public Game(Form _form) 
         {
             form = _form;
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.MaximumSize = form.MaximumSize;
-            this.MinimumSize = form.MinimumSize;
-            __Width = form.ClientSize.Width;
-            __Height = form.ClientSize.Height;
+            this.Width = __Width = form.Width;
+            this.Height = __Height = form.Height;
+            this.MaximumSize = new System.Drawing.Size(__Width, __Height);
+            this.MinimumSize = new System.Drawing.Size(__Width, __Height);
 
             Init();
         }
@@ -156,5 +157,17 @@ namespace AsteroidGame
             Update();
         }
 
+        private void InitializeComponent()
+        {
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.SuspendLayout();
+            // 
+            // Game
+            // 
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Name = "Game";
+            this.ResumeLayout(false);
+
+        }
     }
 }

@@ -11,7 +11,6 @@ namespace AsteroidGame
         private static Button __btnContinue = new Button();
         private static Button __btnExit = new Button();
         private static Bitmap __bitmap_2;
-
         public bool bl=false;
         public Pause()
         {
@@ -69,6 +68,18 @@ namespace AsteroidGame
         {
             this.Close();
             bl = false;
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // Pause
+            // 
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Name = "Pause";
+            this.ResumeLayout(false);
+
         }
     }
 }

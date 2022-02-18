@@ -86,8 +86,11 @@ namespace AsteroidGame
         }
 
         private static void btn_2_Clicked(object sender, EventArgs e)
-        {
-            new Pause().ShowDialog();
+        {     
+            //StartGame SG = new StartGame();
+            
+            //SG.Restart(__form, 1200, 1000);
+
         }
 
         private static void btn_4_Clicked(object sender, EventArgs e)
