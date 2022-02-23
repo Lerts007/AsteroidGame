@@ -1,86 +1,147 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Drawing;
+using AsteroidGame.VisualObject;
 
 namespace AsteroidGame
 {
-    internal static class Game
+    internal class Game : Form
     {
         private static BufferedGraphicsContext __context;
         public static BufferedGraphics __buffer;
+        private static Form form = null;
 
         public static int __Width { get; set; }
         public static int __Height { get; set; }
 
-        public static BaseObject[] __objs;
+        private static Star[] __star;
+        private static Asteroid[] __asteroid;
+        private static Bullet __bullet;
+        private static Planets __planet;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private static Timer timer = new Timer { Interval = 100 };
 
-        
-        static Game() { }
-
-        public static void Init(Form form)
+        public Game(Form _form) 
         {
+            form = _form;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.Width = __Width = form.Width;
+            this.Height = __Height = form.Height;
+            this.MaximumSize = new System.Drawing.Size(__Width, __Height);
+            this.MinimumSize = new System.Drawing.Size(__Width, __Height);
+
+            Init();
+        }
+
+        public void Init()
+        {
+            
             Graphics g;
 
             __context = BufferedGraphicsManager.Current;
 
-            g = form.CreateGraphics();
+            g = this.CreateGraphics();
 
-            __Width = form.ClientSize.Width;
-            __Height = form.ClientSize.Height;
+            
 
             __buffer = __context.Allocate(g, new Rectangle(0, 0, __Width, __Height));
            
             Load();
 
-            Timer timer = new Timer { Interval = 100 };
+            this.KeyDown += form_KeyDown;
+            this.KeyPreview = true;
+
+            
             timer.Start();
             timer.Tick += Timer_Tick;
         }
 
+        private void form_KeyDown(object sender, KeyEventArgs e)
+        {
+            timer.Stop();
+            
+            if (e.KeyCode == Keys.Escape)
+            {
+                Pause ps = new Pause();
+                ps.ShowDialog();
+                if (ps.bl)
+                {
+                    this.Close();
+                    __buffer.Dispose();
+                    __context.Dispose();
+                }
+                else
+                    timer.Start();
+            }
+        }
+
+
         public static void Draw()
         {           
             __buffer.Graphics.Clear(Color.Black);
-            foreach (BaseObject item in __objs)
+            __planet.Draw();
+            foreach (Star item in __star)
             {
                 item.Draw();
             }
+            foreach (Asteroid item in __asteroid)
+            {
+                item.Draw();
+            }
+            __bullet.Draw();
             __buffer.Render();
         }
 
         public static void Update()
         {
-            foreach (BaseObject item in __objs)
+            __planet.Update();
+            foreach (Star item in __star)
                 item.Update();
+
+            foreach (Asteroid item in __asteroid)
+            {
+                item.Update();
+                if(item.Collision(__bullet))
+                {
+                    __bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(15, 5));
+                    System.Media.SystemSounds.Hand.Play();
+                }
+                    
+            }
+            __bullet.Update();
+
         }
 
         public static void Load()
         {
             Random r = new Random();
-            __objs = new BaseObject[31];
+            __star = new Star[31];
+            __asteroid = new Asteroid[10];
+
 
             //Создается планета /create planet/
-            for (int i = 0; i < 1; i++)
-            {
-                __objs[i] = new Planets(new Point(r.Next(0, __Height), r.Next(0, __Width - 500)),
+                __planet = new Planets(new Point(r.Next(0, __Height), r.Next(0, __Width - 500)),
                                             new Point(5, 0),
-                                            new Size(150, 150));
-            }
+                                            150);
 
             //Создается астероид /creat asteroid/
-            for (int i = 1; i < (__objs.Length+1)/2; i++)
+            for (int i = 0; i < __asteroid.Length; i++)
             {
-                __objs[i] = new Asteroid(new Point(r.Next(0, __Height), r.Next(0, __Width - 300)), 
+                __asteroid[i] = new Asteroid(new Point(r.Next(0, __Height), r.Next(0, __Width - 300)), 
                                             new Point(RAN(), RAN()), 
-                                            new Size(20, 20));
+                                            20);
             }
 
             //Создается звезда /creat star/
-            for (int i = (__objs.Length + 1)/2; i < (__objs.Length); i++)
+            for (int i = 0; i < __star.Length; i++)
             {
-                __objs[i] = new Star(new Point(r.Next(0, __Height), r.Next(0, __Width - 300)),
-                                            new Point(15, 0),
-                                            new Size(r.Next(30, 50), r.Next(30, 50)));
+                __star[i] = new Star(new Point(r.Next(0, __Height), r.Next(0, __Width - 300)),
+                                            new Point(r.Next(15, 25), 0),
+                                            r.Next(30, 50));
             }
+
+            //Создается пуля /creat bullet/
+            __bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(15, 5));
 
             int RAN()
             {
@@ -96,5 +157,17 @@ namespace AsteroidGame
             Update();
         }
 
+        private void InitializeComponent()
+        {
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.SuspendLayout();
+            // 
+            // Game
+            // 
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Name = "Game";
+            this.ResumeLayout(false);
+
+        }
     }
 }

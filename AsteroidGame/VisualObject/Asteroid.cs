@@ -5,15 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AsteroidGame
+namespace AsteroidGame.VisualObject
 {
-    internal class Asteroid : BaseObject
+    internal class Asteroid : BaseObject, ICollision
     {
-        private static Image __ImageAsteroid = Image.FromFile("image/Asteroid.png");
+        private static Image __ImageAsteroid = Properties.Resources.Asteroid;
 
-        public Asteroid(Point pos, Point dir, Size size) : base(pos, dir, size)
+        public int Power { get; set; }
+
+        public Asteroid(Point pos, Point dir, int size) 
+            : base(pos, dir, new Size(size, size)) 
         {
+            Power = 1;
         }
+
+
         public override void Draw()
         {
             Game.__buffer.Graphics.DrawImage(__ImageAsteroid, _Pos.X, _Pos.Y, _Size.Width, _Size.Height);
@@ -28,6 +34,13 @@ namespace AsteroidGame
 
             if (_Pos.Y < 0) _Dir.Y = -_Dir.Y;
             if (_Pos.Y > Game.__Height - 20) _Dir.Y = -_Dir.Y;
+        }
+
+        public Rectangle Rect => new Rectangle(_Pos, _Size);
+
+        public bool Collision(ICollision o)
+        {
+            return o.Rect.IntersectsWith(this.Rect);
         }
     }
 }
