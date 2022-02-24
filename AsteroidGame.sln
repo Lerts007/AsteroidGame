@@ -7,7 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsteroidGame", "AsteroidGam
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{8E3EB034-A386-4896-8488-2E966BC29B5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salary_of_Workers", "Salary_of_Workers\Salary_of_Workers.csproj", "{F51A3B9B-AF88-4DC3-BEBE-73921DD702EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Salary_of_Workers", "Salary_of_Workers\Salary_of_Workers.csproj", "{F51A3B9B-AF88-4DC3-BEBE-73921DD702EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task_1_from_Lesson_3", "Task_1_from_Lesson_3\Task_1_from_Lesson_3.csproj", "{4F453F4F-BB1E-4F7D-A856-AF0A430A99AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{F51A3B9B-AF88-4DC3-BEBE-73921DD702EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F51A3B9B-AF88-4DC3-BEBE-73921DD702EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F51A3B9B-AF88-4DC3-BEBE-73921DD702EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F453F4F-BB1E-4F7D-A856-AF0A430A99AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F453F4F-BB1E-4F7D-A856-AF0A430A99AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F453F4F-BB1E-4F7D-A856-AF0A430A99AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F453F4F-BB1E-4F7D-A856-AF0A430A99AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
