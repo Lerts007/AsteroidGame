@@ -59,6 +59,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="VisualObject\Bullet.cs" />
+    <Compile Include="VisualObject\Medicine_Cabinet.cs" />
     <Compile Include="VisualObject\Planets.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

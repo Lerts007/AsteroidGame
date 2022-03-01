@@ -101,7 +101,7 @@ namespace AsteroidGame
             if(__spaceship != null)
             {
                 __buffer.Graphics.DrawString("Health: " + __spaceship.Energy, SystemFonts.DefaultFont, Brushes.White, 0, 0);
-                //__buffer.Graphics.DrawString("Point: " + __spaceship.Energy, SystemFonts.DefaultFont, Brushes.White, 0, 0);
+                __buffer.Graphics.DrawString("Point: " + __spaceship.Point, SystemFonts.DefaultFont, Brushes.White, 0, 15);
             }
 
             __buffer.Render();
@@ -124,6 +124,7 @@ namespace AsteroidGame
                     System.Media.SystemSounds.Hand.Play();
                     __asteroid[i] = null;
                     __bullet = null;
+                    __spaceship.PointUp();
                     continue;
                 }
 
@@ -165,9 +166,6 @@ namespace AsteroidGame
                                             new Point(r.Next(15, 25), 0),
                                             r.Next(30, 50));
             }
-
-            //Создается пуля /creat bullet/
-            __bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(15, 5));
 
             int RAN()
             {

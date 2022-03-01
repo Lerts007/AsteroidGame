@@ -20,6 +20,11 @@ namespace AsteroidGame.VisualObject
             _energy -= n;
         }
 
+        public void PointUp()
+        {
+            _point += 1;
+        }
+
         public Spaceship(Point poz, Point dir, int size) : base(poz, dir, new Size(size, size))
         {
 
