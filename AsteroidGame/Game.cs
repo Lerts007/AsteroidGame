@@ -18,6 +18,7 @@ namespace AsteroidGame
         private static Asteroid[] __asteroid;
         private static Bullet __bullet;
         private static Planets __planet;
+        private static Spaceship __spaceship = new Spaceship(new Point(100, 100), new Point(5, 5), 10);
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private static Timer timer = new Timer { Interval = 100 };
 
@@ -51,17 +52,21 @@ namespace AsteroidGame
             this.KeyDown += form_KeyDown;
             this.KeyPreview = true;
 
-            
+            Spaceship.MessageDie += Finish;
+
             timer.Start();
             timer.Tick += Timer_Tick;
         }
 
         private void form_KeyDown(object sender, KeyEventArgs e)
         {
-            timer.Stop();
+            if (e.KeyCode == Keys.Enter) __bullet = new Bullet(new Point(__spaceship.Rect.X + 10, __spaceship.Rect.Y + 4), new Point(5, 0), new Size(15, 5));
+            if (e.KeyCode == Keys.Up) __spaceship.Up();
+            if (e.KeyCode == Keys.Down) __spaceship.Down();
             
             if (e.KeyCode == Keys.Escape)
             {
+                timer.Stop();
                 Pause ps = new Pause();
                 ps.ShowDialog();
                 if (ps.bl)
@@ -86,9 +91,19 @@ namespace AsteroidGame
             }
             foreach (Asteroid item in __asteroid)
             {
-                item.Draw();
+                item?.Draw();
             }
-            __bullet.Draw();
+
+            __bullet?.Draw();
+
+            __spaceship?.Draw();
+
+            if(__spaceship != null)
+            {
+                __buffer.Graphics.DrawString("Health: " + __spaceship.Energy, SystemFonts.DefaultFont, Brushes.White, 0, 0);
+                //__buffer.Graphics.DrawString("Point: " + __spaceship.Energy, SystemFonts.DefaultFont, Brushes.White, 0, 0);
+            }
+
             __buffer.Render();
         }
 
@@ -98,18 +113,29 @@ namespace AsteroidGame
             foreach (Star item in __star)
                 item.Update();
 
-            foreach (Asteroid item in __asteroid)
+            for(int i = 0; i < __asteroid.Length; i++)
             {
-                item.Update();
-                if(item.Collision(__bullet))
-                {
-                    __bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(15, 5));
-                    System.Media.SystemSounds.Hand.Play();
-                }
-                    
-            }
-            __bullet.Update();
+                if (__asteroid[i] == null) continue;
 
+                __asteroid[i].Update();
+
+                if(__bullet != null && __bullet.Collision(__asteroid[i]))
+                {
+                    System.Media.SystemSounds.Hand.Play();
+                    __asteroid[i] = null;
+                    __bullet = null;
+                    continue;
+                }
+
+                if(!__spaceship.Collision(__asteroid[i])) continue;
+
+                var rnd = new Random();
+                __spaceship?.EnergyLow(rnd.Next(1, 10));
+                System.Media.SystemSounds.Asterisk.Play();
+                if(__spaceship.Energy <= 0) __spaceship?.Die();
+            }
+
+            __bullet?.Update();
         }
 
         public static void Load()
@@ -155,6 +181,13 @@ namespace AsteroidGame
         {
             Draw();
             Update();
+        }
+
+        public static void Finish()
+        {
+            timer.Stop();
+            __buffer.Graphics.DrawString("The End", new Font(FontFamily.GenericSansSerif, 60, FontStyle.Underline), Brushes.White, 200, 100);
+            __buffer.Render();
         }
 
         private void InitializeComponent()

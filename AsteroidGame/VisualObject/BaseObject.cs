@@ -4,6 +4,7 @@ using System.Drawing;
 
 namespace AsteroidGame.VisualObject
 {
+    public delegate void Message();
     internal abstract class BaseObject
     {
         protected Point _Pos;
