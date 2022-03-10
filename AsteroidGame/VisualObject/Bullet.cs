@@ -23,7 +23,11 @@ namespace AsteroidGame.VisualObject
         public override void Update()
         {
             _Pos.X += 10;
-            if ((_Pos.X + _Size.Width) > Game.__Width) _Pos.X = 0- _Size.Width;
+            if (_Pos.X > Game.__Width) _Pos.X = 0 - _Size.Width;
+        }
+        public bool EndBullet()
+        {
+            return (_Pos.X) == Game.__Width;
         }
 
         public Rectangle Rect => new Rectangle(_Pos, _Size);
