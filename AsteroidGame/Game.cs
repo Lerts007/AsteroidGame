@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Drawing;
 using AsteroidGame.VisualObject;
+using System.IO;
 
 namespace AsteroidGame
 {
@@ -22,6 +23,9 @@ namespace AsteroidGame
         private static Spaceship __spaceship;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private static Timer timer = new Timer { Interval = 100 };
+        private static StreamWriter _HistoryGame = new StreamWriter("HistoryGame.txt");
+
+        private static DateTime _DT;
 
         public Game(Form _form) 
         {
@@ -77,6 +81,7 @@ namespace AsteroidGame
                     this.Close();
                     __buffer.Dispose();
                     __context.Dispose();
+                    _HistoryGame.Dispose();
                 }
                 else
                     timer.Start();
@@ -114,6 +119,7 @@ namespace AsteroidGame
 
         public static void Update()
         {
+            string info;
             var rnd = new Random();
             __planet.Update();
             foreach (Star item in __star)
@@ -131,6 +137,10 @@ namespace AsteroidGame
                     __asteroid[i] = null;
                     __bullet = null;
                     __spaceship.PointUp();
+                    _DT = DateTime.Now;
+                    info = _DT.ToString() + " Пуля уничтожила астеройд.";
+                    Console.WriteLine(info);
+                    _HistoryGame.WriteLine(info);
                     continue;
                 }
 
@@ -138,6 +148,11 @@ namespace AsteroidGame
 
                 
                 __spaceship?.EnergyLow(rnd.Next(1, 10));
+
+                _DT = DateTime.Now;
+                info = _DT.ToString() + " Астероид врезался в корабль.";
+                Console.WriteLine(info);
+                _HistoryGame?.WriteLine(info);
                 System.Media.SystemSounds.Asterisk.Play();
                 if(__spaceship.Energy <= 0) __spaceship?.Die();
 
@@ -153,6 +168,11 @@ namespace AsteroidGame
             {
                 __spaceship?.EnergyHeigh();
                 __Medicine = null;
+
+                _DT = DateTime.Now;
+                info = _DT.ToString() + " Корабль был отремантирован.";
+                Console.WriteLine(info);
+                _HistoryGame.WriteLine(info);
 
                 __Medicine = new Medicine_Cabinet(new Point(rnd.Next(0, __Height), rnd.Next(0, __Width - 300)),
                                             new Point(RAN(), RAN()),
